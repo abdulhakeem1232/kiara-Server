@@ -13,14 +13,19 @@ const createAdminsTable = require('./Migrations/AdminTable')
 
 const app=express()
 
-app.use(cors());
+const corsOptions = {
+   origin: 'http://localhost:5173', 
+   credentials: true, 
+   optionsSuccessStatus: 200, 
+};
+app.use(cors(corsOptions));
 app.use(helmet());
 app.use(express.json());
 app.use(morgan('combined'));
 
-// app.use('/api/users', userRoutes);
-// app.use('/api/clients', clientRoutes);
-app.use('/api/admins', adminRoutes);
+// app.use('/user', userRoutes);
+// app.use('/client', clientRoutes);
+app.use('/admin', adminRoutes);
 
 const startServer=async()=>{
     try{

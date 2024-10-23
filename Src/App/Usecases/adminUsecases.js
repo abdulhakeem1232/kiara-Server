@@ -55,9 +55,58 @@ const createUser=async(name,email,phoneNumber,client_id,password)=>{
     }
 }
 
+const getClients= async()=>{
+    try{
+        const clients = await adminRepository.getClients();
+        return clients;
+    }catch(error){
+        console.error('Error in fetching client list:', error.message);
+        throw new Error('Error in fetching client list');
+    }
+}
+
+const getUsers= async()=>{
+    try{
+        const users = await adminRepository.getUsers();
+        return users;
+    }catch(error){
+        console.error('Error in fetching users list:', error.message);
+        throw new Error('Error in fetching users list');
+    }
+}
+
+const updateClient = async (clientId, updatedData) => {
+    try {
+        const updatedClient = await adminRepository.updateClient(clientId, updatedData);
+        return updatedClient;
+    } catch (error) {
+        console.error('Error in updating client:', error.message);
+        throw new Error('Error updating client');
+    }
+};
+
+const deleteClient = async (clientId) => {
+    try {
+        const deletedClient = await adminRepository.deleteClientById(clientId);
+        
+        if (!deletedClient) {
+            throw new Error('Client not found');
+        }
+        
+        return deletedClient; 
+    } catch (error) {
+        console.error('Error in deleting client:', error.message);
+        throw new Error('Error deleting client');
+    }
+};
+
 module.exports = {
     createAdmin,
     loginAdmin,
     createClient,
     createUser,
+    getClients,
+    getUsers,
+    updateClient,
+    deleteClient,
 }

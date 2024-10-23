@@ -13,6 +13,8 @@ const createAdmin = async (req, res, next) => {
 const loginAdmin = async (req, res, next) => {
     try {
         const { email, password } = req.body;
+        console.log(email, password);
+        
         const { token, admin } = await adminUsecases.loginAdmin(email, password);
         res.status(200).json({ token, admin });
     } catch (error) {
@@ -40,9 +42,62 @@ const createUser = async (req, res, next) => {
     }
 };
 
+const getClient = async (req, res, next) => {
+    try {
+        const clients = await adminUsecases.getClients();
+        res.status(201).json(clients);
+    } catch (error) {
+        next(error);
+    }
+};
+
+const getUsers = async (req, res, next) => {
+    try {
+        const users = await adminUsecases.getUsers();
+        res.status(201).json(users);
+    } catch (error) {
+        next(error);
+    }
+};
+
+
+const updateClient = async (req, res, next) => {
+    const { clientId } = req.params; 
+    const updatedData = req.body; 
+    try {
+        const updatedClient = await adminUsecases.updateClient(clientId, updatedData);
+        if (updatedClient) {
+            res.status(200).json(updatedClient);
+        } else {
+            res.status(404).json({ message: 'Client not found' });
+        }
+    } catch (error) {
+        next(error); 
+    }
+};
+
+const deleteClient = async (req, res, next) => {
+    const { clientId } = req.params;  
+    try {
+        const deletedClient = await adminUsecases.deleteClient(clientId);
+        if (deletedClient) { 
+            res.status(200).json({ message: 'Client deleted successfully' }); 
+        } else {
+            res.status(404).json({ message: 'Client not found' });
+        }
+    } catch (error) {
+        next(error);
+    }
+};
+
+
 module.exports = {
     createAdmin,
     loginAdmin,
     createClient,
-    createUser
+    createUser,
+    getClient,
+    getUsers,
+    updateClient,
+    deleteClient,
 }

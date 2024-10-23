@@ -84,9 +84,59 @@ const createUser=async(name,email,phoneNumber,client_id,password)=>{
     }
 }
 
+const getClients = async (email) => {
+    try {
+        const result = await pool.query('SELECT * FROM clients ');
+        return result.rows; 
+    } catch (error) {
+        throw new Error('Database error: Unable to fetch clients');
+    }
+};
+
+const getUsers = async (email) => {
+    try {
+        const result = await pool.query('SELECT * FROM users ');
+        return result.rows; 
+    } catch (error) {
+        throw new Error('Database error: Unable to fetch users');
+    }
+};
+
+const updateClient = async (clientId, updatedData) => {
+    try {
+        console.log(updatedData,'ppppppp');
+        
+        const result = await pool.query(
+            'UPDATE clients SET name = COALESCE($1, name), email = COALESCE($2, email), mobile_number = COALESCE($3, mobile_number), industry = COALESCE($4, industry) WHERE id = $5 RETURNING *',
+            [updatedData.name, updatedData.email, updatedData.phoneNumber, updatedData.industry, clientId]
+        );
+        return result.rows[0];
+    } catch (error) {
+        console.error('Error in admin repository updating client:', error.message);
+        throw new Error('Error updating client in repository');
+    }
+};
+
+const deleteClientById = async (clientId) => {
+    try {
+        const result = await pool.query(
+            'DELETE FROM clients WHERE id = $1 RETURNING *',
+            [clientId]
+        );
+        return result.rows[0]; 
+    } catch (error) {
+        console.error('Error deleting client:', error.message);
+        throw new Error('Database error: Unable to delete client');
+    }
+};
+
 module.exports ={
     createAdmin,
     findAdminByEmail,
     createClient,
     createUser,
+    getClients,
+    getUsers,
+    updateClient,
+    deleteClientById
 }
