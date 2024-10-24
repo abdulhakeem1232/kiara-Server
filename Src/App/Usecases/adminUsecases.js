@@ -1,6 +1,7 @@
 const adminRepository = require('./../Repository/adminRepositry')
 const jwtService = require('./../../Services/JwtService')
 const bcrypt = require('bcryptjs');
+const { emitClientDataUpdate,emitUserDataUpdate,emitClientDeleted,emitUserDeleted} = require('../../Config/socket')
 
 const createAdmin = async (email, password) => {
     try {
@@ -78,10 +79,22 @@ const getUsers= async()=>{
 const updateClient = async (clientId, updatedData) => {
     try {
         const updatedClient = await adminRepository.updateClient(clientId, updatedData);
+        emitClientDataUpdate(updatedClient)
         return updatedClient;
     } catch (error) {
         console.error('Error in updating client:', error.message);
         throw new Error('Error updating client');
+    }
+};
+
+const updateUser = async (userId, updatedData) => {
+    try {
+        const updatedUser = await adminRepository.updateUser(userId, updatedData);
+        emitUserDataUpdate(updatedUser)
+        return updatedUser;
+    } catch (error) {
+        console.error('Error in updating user:', error.message);
+        throw new Error('Error updating user');
     }
 };
 
@@ -92,11 +105,26 @@ const deleteClient = async (clientId) => {
         if (!deletedClient) {
             throw new Error('Client not found');
         }
-        
+        emitClientDeleted(clientId)
         return deletedClient; 
     } catch (error) {
         console.error('Error in deleting client:', error.message);
         throw new Error('Error deleting client');
+    }
+};
+
+const deleteUser = async (userId) => {
+    try {
+        const deletedUser = await adminRepository.deleteUserById(userId);
+        
+        if (!deletedUser) {
+            throw new Error('User not found');
+        }
+        emitUserDeleted(userId)
+        return deletedUser; 
+    } catch (error) {
+        console.error('Error in deleting user:', error.message);
+        throw new Error('Error deleting user');
     }
 };
 
@@ -109,4 +137,6 @@ module.exports = {
     getUsers,
     updateClient,
     deleteClient,
+    updateUser,
+    deleteUser,
 }

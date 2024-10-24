@@ -34,8 +34,8 @@ const createClient = async (req, res, next) => {
 
 const createUser = async (req, res, next) => {
     try {
-        const { name, email, phoneNumber, client_id, password } = req.body;
-        const newUser = await adminUsecases.createUser(name, email, phoneNumber, client_id, password);
+        const { username, email, phoneNumber, client_id, password } = req.body;
+        const newUser = await adminUsecases.createUser(username, email, phoneNumber, client_id, password);
         res.status(201).json(newUser);
     } catch (error) {
         next(error);
@@ -75,6 +75,20 @@ const updateClient = async (req, res, next) => {
         next(error); 
     }
 };
+const updateUser = async (req, res, next) => {
+    const { userId } = req.params; 
+    const updatedData = req.body; 
+    try {
+        const updateduser = await adminUsecases.updateUser(userId, updatedData);
+        if (updateduser) {
+            res.status(200).json(updateduser);
+        } else {
+            res.status(404).json({ message: 'User not found' });
+        }
+    } catch (error) {
+        next(error); 
+    }
+};
 
 const deleteClient = async (req, res, next) => {
     const { clientId } = req.params;  
@@ -84,6 +98,20 @@ const deleteClient = async (req, res, next) => {
             res.status(200).json({ message: 'Client deleted successfully' }); 
         } else {
             res.status(404).json({ message: 'Client not found' });
+        }
+    } catch (error) {
+        next(error);
+    }
+};
+
+const deleteUser = async (req, res, next) => {
+    const { userId } = req.params;  
+    try {
+        const deletedUser = await adminUsecases.deleteUser(userId);
+        if (deletedUser) { 
+            res.status(200).json({ message: 'User deleted successfully' }); 
+        } else {
+            res.status(404).json({ message: 'User not found' });
         }
     } catch (error) {
         next(error);
@@ -100,4 +128,6 @@ module.exports = {
     getUsers,
     updateClient,
     deleteClient,
+    updateUser,
+    deleteUser,
 }

@@ -10,6 +10,9 @@ router.get('/clientlist',adminController.getClient)
 router.get('/userlist',adminController.getUsers)
 router.put('/updateclient/:clientId',adminController.updateClient)
 router.delete('/deleteClient/:clientId',adminController.deleteClient)
+router.put('/updateuser/:userId',adminController.updateUser)
+router.delete('/deleteUser/:userId',adminController.deleteUser)
+
 
 
 
