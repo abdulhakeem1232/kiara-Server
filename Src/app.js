@@ -26,7 +26,7 @@ const app=express()
 // };
 
 const corsOptions = {
-   origin: 'https://kiara-global-service.vercel.app/', 
+   origin: 'https://kiara-global-service.vercel.app', 
    credentials: true, 
    optionsSuccessStatus: 200, 
 };

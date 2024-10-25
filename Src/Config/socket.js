@@ -12,7 +12,7 @@ const initializeSocket = (server) => {
 
   io = socketIo(server, {
     cors: {
-      origin: 'https://kiara-global-service.vercel.app/', 
+      origin: 'https://kiara-global-service.vercel.app', 
       credentials: true
     }
   });
