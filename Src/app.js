@@ -15,6 +15,7 @@ const userRoutes = require('./App/Routes/userRoute')
 const createUsersTable = require('./Migrations/UserTable')
 const createClientsTable = require('./Migrations/ClientTable')
 const createAdminsTable = require('./Migrations/AdminTable')
+const createOperation_logsTable = require('./Migrations/Operations_logs')
 
 const app=express()
 
@@ -39,6 +40,7 @@ const startServer=async()=>{
        await createUsersTable();
        await createClientsTable();
        await createAdminsTable();
+       await createOperation_logsTable();
 
        const port=process.env.SERVER_PORT||3001
        

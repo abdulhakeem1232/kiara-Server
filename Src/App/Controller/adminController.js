@@ -118,6 +118,33 @@ const deleteUser = async (req, res, next) => {
     }
 };
 
+const dailyMetrics = async (req, res, next) => {  
+    try {
+        const dailyReport = await adminUsecases.dailyMetrics();
+        res.status(201).json(dailyReport);
+    } catch (error) {
+        next(error);
+    }
+};
+
+const weeklyMetrics = async (req, res, next) => {  
+    try {
+        const weeklyReport = await adminUsecases.weeklyMetrics();
+        res.status(201).json(weeklyReport);
+    } catch (error) {
+        next(error);
+    }
+};
+
+const monthlyMetrics = async (req, res, next) => {  
+    try {
+        const monthlyReport = await adminUsecases.monthlyMetrics();
+        res.status(201).json(monthlyReport);
+    } catch (error) {
+        next(error);
+    }
+};
+
 
 module.exports = {
     createAdmin,
@@ -130,4 +157,7 @@ module.exports = {
     deleteClient,
     updateUser,
     deleteUser,
+    dailyMetrics,
+    weeklyMetrics,
+    monthlyMetrics
 }

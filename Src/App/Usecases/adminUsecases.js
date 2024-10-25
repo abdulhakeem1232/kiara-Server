@@ -128,6 +128,36 @@ const deleteUser = async (userId) => {
     }
 };
 
+const dailyMetrics = async () => {
+    try {
+        let dailyReport = await adminRepository.getDailyMetrics()
+        return dailyReport; 
+    } catch (error) {
+        console.error('Error in daily metric:', error.message);
+        throw new Error('Error daily metric');
+    }
+};
+
+const weeklyMetrics = async () => {
+    try {
+        let weeklyReport = await adminRepository.getWeeklyMetrics()
+        return weeklyReport; 
+    } catch (error) {
+        console.error('Error in weekly metric:', error.message);
+        throw new Error('Error weekly metric');
+    }
+};
+
+const monthlyMetrics = async () => {
+    try {
+        let monthlyReport = await adminRepository.getMonthlyMetrics()
+        return monthlyReport; 
+    } catch (error) {
+        console.error('Error in monthly metric:', error.message);
+        throw new Error('Error monthly metric');
+    }
+};
+
 module.exports = {
     createAdmin,
     loginAdmin,
@@ -139,4 +169,7 @@ module.exports = {
     deleteClient,
     updateUser,
     deleteUser,
+    dailyMetrics,
+    weeklyMetrics, 
+    monthlyMetrics
 }

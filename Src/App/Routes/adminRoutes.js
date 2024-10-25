@@ -12,6 +12,10 @@ router.put('/updateclient/:clientId',adminController.updateClient)
 router.delete('/deleteClient/:clientId',adminController.deleteClient)
 router.put('/updateuser/:userId',adminController.updateUser)
 router.delete('/deleteUser/:userId',adminController.deleteUser)
+router.get('/dailymetrics',adminController.dailyMetrics)
+router.get('/weeklymetrics',adminController.weeklyMetrics)
+router.get('/monthlymetrics',adminController.monthlyMetrics)
+
 
 
 
