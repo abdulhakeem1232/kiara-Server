@@ -25,13 +25,14 @@ const app=express()
 //    optionsSuccessStatus: 200, 
 // };
 
-const corsOptions = {
+app.use(cors({
    origin: 'https://kiara-global-service.vercel.app', 
-   credentials: true, 
-   optionsSuccessStatus: 200, 
-};
+   methods: ['GET', 'POST', 'PUT', 'DELETE'],
+   allowedHeaders: ['Content-Type', 'Authorization'],
+   credentials: true
+ }));
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 app.use(helmet());
 app.use(express.json());
 app.use(morgan('combined'));

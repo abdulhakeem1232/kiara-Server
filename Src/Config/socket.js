@@ -10,12 +10,14 @@ const initializeSocket = (server) => {
   //   }
   // });
 
-  io = socketIo(server, {
+  const io = require('socket.io')(server, {
     cors: {
-      origin: 'https://kiara-global-service.vercel.app', 
+      origin: 'https://kiara-global-service.vercel.app',
+      methods: ['GET', 'POST'],
       credentials: true
     }
   });
+  
 
   io.on('connection', (socket) => {
     console.log('A client connected:', socket.id);
