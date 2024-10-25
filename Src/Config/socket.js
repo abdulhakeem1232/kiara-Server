@@ -3,9 +3,16 @@ const socketIo = require('socket.io');
 let io;
 
 const initializeSocket = (server) => {
+  // io = socketIo(server, {
+  //   cors: {
+  //     origin: 'http://localhost:5173', 
+  //     credentials: true
+  //   }
+  // });
+
   io = socketIo(server, {
     cors: {
-      origin: 'http://localhost:5173', 
+      origin: 'https://kiara-global-service.vercel.app/', 
       credentials: true
     }
   });
