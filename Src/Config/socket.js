@@ -12,7 +12,7 @@ const initializeSocket = (server) => {
 
   const io = require('socket.io')(server, {
     cors: {
-      origin: 'https://kiara-global-service.vercel.app',
+      origin: '*',
       methods: ['GET', 'POST'],
       credentials: true
     }
