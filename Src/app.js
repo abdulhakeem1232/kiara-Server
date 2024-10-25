@@ -18,7 +18,7 @@ const createAdminsTable = require('./Migrations/AdminTable')
 const createOperation_logsTable = require('./Migrations/Operations_logs')
 
 const app=express()
-
+ 
 const corsOptions = {
    origin: 'http://localhost:5173', 
    credentials: true, 
@@ -37,8 +37,8 @@ const startServer=async()=>{
     try{
        await connectDB();
 
-       await createUsersTable();
        await createClientsTable();
+       await createUsersTable();
        await createAdminsTable();
        await createOperation_logsTable();
 
