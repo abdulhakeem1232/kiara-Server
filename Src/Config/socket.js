@@ -3,21 +3,13 @@ const socketIo = require('socket.io');
 let io;
 
 const initializeSocket = (server) => {
-  // io = socketIo(server, {
-  //   cors: {
-  //     origin: 'http://localhost:5173', 
-  //     credentials: true
-  //   }
-  // });
-
-const io = require('socket.io')(server, {
-  cors: {
-    origin: 'https://kiara-global-service.vercel.app',
-    methods: ['GET', 'POST'],
-    credentials: true
-  }
-});
-
+  io = socketIo(server, {
+    cors: {
+      origin: 'https://kiara-global-service.vercel.app',
+      methods: ['GET', 'POST'],
+      credentials: true
+    }
+  });
 
   io.on('connection', (socket) => {
     console.log('A client connected:', socket.id);
@@ -25,15 +17,15 @@ const io = require('socket.io')(server, {
     socket.on('disconnect', () => {
       console.log('Client disconnected:', socket.id);
     });
-
   });
 };
 
 const emitClientDataUpdate = (updatedClientData) => {
-  console.log('client data updated checking');
-  io.emit('clientDataUpdated', updatedClientData);
-    console.log('client data updated emmited');
-    
+  console.log('Client data updated, emitting event');
+  if (io) {
+  console.log('Client data updated, emitting event');
+    io.emit('clientDataUpdated', updatedClientData);
+  }
 };
 
 const emitUserDataUpdate = (updatedUserData) => {
