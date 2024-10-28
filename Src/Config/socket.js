@@ -30,6 +30,8 @@ const io = require('socket.io')(server, {
 };
 
 const emitClientDataUpdate = (updatedClientData) => {
+  console.log('client data updated checking');
+
   if (io) {
     console.log('client data updated emmited');
     
